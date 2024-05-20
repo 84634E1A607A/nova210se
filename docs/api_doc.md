@@ -1,5 +1,7 @@
 # Nova 210 SE: API Documentation
 
+This document describes the API endpoints and their usage in the Nova 210 SE project.
+
 ## Menu
 
 ```python
@@ -42,6 +44,131 @@ urlpatterns = [
 ]
 ```
 
+## Structs returned by APIs
+
+### User
+
+#### User.Basic
+
+```json
+{
+    "id": 1,
+    "user_name": "UserN@meWithoutBlankSpace",
+    "avatar_url": "data:image/png;base64,base64encodedstring | https://example.com/avatar.png"
+}
+```
+
+#### User.Detailed
+
+```json
+{
+    "id": 1,
+    "user_name": "UserN@meWithoutBlankSpace",
+    "avatar_url": "data:image/png;base64,base64encodedstring | https://example.com/avatar.png",
+    "email": "",
+    "phone": "12345678901"
+}
+```
+
+### FriendGroup
+
+```json
+{
+    "group_id": 1,
+    "group_name": "Simple Friend Gr0up~"
+}
+```
+
+### Friend
+
+```json
+{
+    "friend": `User.Detailed`,
+    "nickname": "Bla~ Bla~ Bla",
+    "group": `FriendGroup`
+}
+```
+
+### FriendInvitation
+
+```json
+{
+    "id": 1,
+    "sender": `User.Basic`,
+    "receiver": `User.Basic`,
+    "comment": "#!*(&$87)r6h#(*asL0#*%&)sdfaNN1&^",
+    "source": `Chat.id | "search"`
+}
+```
+
+### Chat
+
+```json
+{
+    "chat_id": 1,
+    "chat_name": "Name Of Chat",
+    "chat_owner": `User.Basic`,
+    "chat_admins": [`User.Basic`, ...],
+    "chat_members": [`User.Basic`, ...],
+    "last_message": `ChatMessage.Basic | ""`
+}
+```
+
+### UserChatRelation
+
+```json
+{
+    "chat": `Chat`,
+    "nickname": "Nick for Chat",
+    "unread_count": 0
+}
+```
+
+### ChatInvitation
+
+```json
+{
+    "invitation_id": 1,
+    "chat_id": 2,
+    "user": `User.Basic`,
+    "invited_by": `User.Basic`,
+    "created_at": 192837192.123
+}
+```
+
+### ChatMessage
+
+#### ChatMessage.Basic
+
+```json
+{
+    "message_id": 1,
+    "chat_id": 3,
+    "message": "Hello~",
+    "send_time": 192837192.456,
+    "sender": `User.Basic`,
+    "reply_to_id": `null | 3`,
+    "deleted": false
+}
+```
+
+#### ChatMessage.Detailed
+
+```json
+{
+    "message_id": 1,
+    "chat_id": 3,
+    "message": "Hello~",
+    "send_time": 192837192.456,
+    "sender": `User.Basic`,
+    "reply_to_id": `null | 3`,
+    "deleted": false,
+    "read_users": [`User.Basic`, ...],
+    "reply_to": `ChatMessage.Basic | null`,
+    "replied_by": [`ChatMessage.Basic`, ...]
+}
+```
+
 ## User control APIs
 
 The User Control APIs are defined in the `main.views.user` module.
@@ -62,13 +189,7 @@ The API returns the user information if the login is successful and will set ses
 ```json
 {
   "ok": true,
-  "data": {
-    "id": 1,
-    "user_name": "user",
-    "avatar_url": "https://...",
-    "email": "",
-    "phone": ""
-  }
+  "data": `User.Detailed`
 }
 ```
 
@@ -103,16 +224,16 @@ The PATCH request updates the user information. The API accepts a JSON object wi
 
 ```json
 {
-    "old_password": "old password",
-    "new_password": "new password",     // Optional
-    "user_name": "new user name",       // Optional
-    "email": "new_email@example.com",   // Optional
-    "phone": "15912345678",              // Optional
-    "avatar_url": "https://..."          // Optional
+  "old_password": "old password",
+  "new_password": "new password", // Optional
+  "user_name": "new user name", // Optional
+  "email": "new_email@example.com", // Optional
+  "phone": "15912345678", // Optional
+  "avatar_url": "https://..." // Optional
 }
 ```
 
-old_password is required if and only if new_password, email *or* phone is present. If old_password is incorrect, the API returns 403 status code.
+old_password is required if and only if new_password, email _or_ phone is present. If old_password is incorrect, the API returns 403 status code.
 If new_password is present, the API updates the password and the session cookies (logs the user out and back in).
 
 If the new password doesn't conform to the password requirements, the API returns 400 status code with an error message.
@@ -136,9 +257,8 @@ This API returns the user information (like login page) after the update.
 #### [`DELETE query`](main/views/user.py#delete_user)
 
 Delete the user logged in and log him out.
-  
+
 This API returns 200 status code with an empty data field if the deletion is successful.
-    
 
 ### [`logout`](main/views/user.py#logout)
 
@@ -163,10 +283,7 @@ The API returns the group information if the group is created successfully. The 
 ```json
 {
   "ok": true,
-  "data": {
-    "group_id": 1,
-    "group_name": "group name"
-  }
+  "data": `FriendGroup`
 }
 ```
 
@@ -183,10 +300,7 @@ The GET request returns the group information for the given group_id. The return
 ```json
 {
   "ok": true,
-  "data": {
-    "group_id": 1,
-    "group_name": "group name"
-  }
+  "data": `FriendGroup`
 }
 ```
 
@@ -214,8 +328,8 @@ This API returns 200 status code with an empty data field if the deletion is suc
 
 ```json
 {
-    "ok": true,
-    "data": null
+  "ok": true,
+  "data": null
 }
 ```
 
@@ -237,12 +351,9 @@ This function handles the `GET /friend/group/list` endpoint. This API requires a
   "data": [
     {
       "group_id": 1,
-      "group_name": ""          // Default group with empty name
+      "group_name": "" // Default group with empty name
     },
-    {
-      "group_id": 2,
-      "group_name": "group name"
-    }
+    `FriendGroup`, ...
   ]
 }
 ```
@@ -260,25 +371,15 @@ Find user by its ID / name. Returns a list of filtered users without the current
 ```json
 {
     "ok": true,
-    "data": [
-        {
-            "id": 1,
-            "user_name": "user",
-            "avatar_url": "https://..."
-        },
-        {
-            ...
-        },
-        ...
-    ]
+    "data": [`User.Basic`, ...]
 }
 ```
 
 This api requires a valid session, or it will return a 403 response.
 
-Possible filters are `id` and `name_contains`. If id is provided, the API performs a precise lookup. If a user with the given id is found, the API will return a list with only one item; else the API will return an empty list. If name_contains is provided, the API performs a case-sensitive search. Any user with a name *containing* the given string will be returned.
+Possible filters are `id` and `name_contains`. If id is provided, the API performs a precise lookup. If a user with the given id is found, the API will return a list with only one item; else the API will return an empty list. If name_contains is provided, the API performs a case-sensitive search. Any user with a name _containing_ the given string will be returned.
 
-If both id and name_contains are provided, the API will *only* use id to perform the lookup.
+If both id and name_contains are provided, the API will _only_ use id to perform the lookup.
 
 The current user and system users will not be returned in the list.
 
@@ -309,26 +410,7 @@ This function handles the `GET /friend/invitation` endpoint. This API requires a
 ```json
 {
   "ok": true,
-  "data": [
-    {
-      "id": 1,
-      "sender": {
-        "id": 1,
-        "user_name": "user",
-        "avatar_url": "https://..."
-      },
-      "receiver": {
-        "id": 2,
-        "user_name": "user2",
-        "avatar_url": "https://..."
-      },
-      "comment": "Hello",
-      "source": "search"
-    },
-    {
-      ...
-    }
-  ]
+  "data": [`FriendInvitation`, ...]
 }
 ```
 
@@ -354,18 +436,7 @@ The GET request returns the friend information for the given friend_user_id. The
 ```json
 {
   "ok": true,
-  "data": {
-    "friend": {
-      "id": 1,
-      "user_name": "user",
-      "avatar_url": "https://..."
-    },
-    "nickname": "Hello",
-    "group": {
-      "group_id": 1,
-      "group_name": "Group"
-    }
-  }
+  "data": `Friend`
 }
 ```
 
@@ -384,7 +455,7 @@ If "group_id" is provided, the API tries to updates the group. However, if the g
 Friend information will be updated if and only if no errors occur.
 
 If the update is successful, the API returns the updated friend information in the same format as the get function.
-    
+
 #### [`DELETE query`](main/views/friend.py#delete_friend)
 
 The DELETE request deletes the friend. This API returns 200 status code with an empty data field if the deletion is successful.
@@ -398,23 +469,7 @@ This function handles the `GET /friend` endpoint. This API requires a valid sess
 ```json
 {
   "ok": true,
-  "data": [
-    {
-      "friend": {
-        "id": 1,
-        "user_name": "user",
-        "avatar_url": "https://..."
-      },
-      "nickname": "Hello",
-      "group": {
-        "group_id": 1,
-        "group_name": "Group"
-      }
-    },
-    {
-      ...
-    }
-  ]
+  "data": [`Friend`, ...]
 }
 ```
 
@@ -426,8 +481,8 @@ This function handles the `POST /chat/new` endpoint. This API requires a valid s
 
 ```json
 {
-    "chat_name": "chat name",
-    "chat_members": [1, 2, 3]
+  "chat_name": "chat name",
+  "chat_members": [1, 2, 3]
 }
 ```
 
@@ -440,17 +495,17 @@ The API returns the chat information if the chat is created successfully. A succ
 ```json
 {
     "ok": true,
-    "data": {See Chat.to_struct}
+    "data": `Chat`
 }
 ```
 
 ### [`invite_to_chat`](main/views/chat.py#invite_to_chat)
 
-This function handles the `POST /chat/<chat_id>/invite` endpoint. This API requires a valid session cookie to be sent with the request. It invites a user to a *group chat*. This API accepts a POST request with JSON content. An example of which is:
+This function handles the `POST /chat/<chat_id>/invite` endpoint. This API requires a valid session cookie to be sent with the request. It invites a user to a _group chat_. This API accepts a POST request with JSON content. An example of which is:
 
 ```json
 {
-    "user_id": 1
+  "user_id": 1
 }
 ```
 
@@ -484,7 +539,7 @@ If the user is neither the owner nor an admin of the chat, the API will return 4
 
 If the invitation does not exist, the API will return 400.
 
-- POST: Expects an empty body, the user will be added to the chat, and *then* magic user #SYSTEM will send a message there. If any other member had sent an invitation to the same user, the invitation will be deleted.
+- POST: Expects an empty body, the user will be added to the chat, and _then_ magic user #SYSTEM will send a message there. If any other member had sent an invitation to the same user, the invitation will be deleted.
 - DELETE: The invitation will be deleted.
 
 ### [`list_chats`](main/views/chat.py#list_chats)
@@ -494,10 +549,7 @@ This function handles the `GET /chat` endpoint. This API requires a valid sessio
 ```json
 {
   "ok": true,
-  "data": [
-    {See UserChatRelation.to_struct},
-    ...
-  ]
+  "data": [`UserChatRelation`, ...]
 }
 ```
 
@@ -525,9 +577,9 @@ This function handles the `POST /chat/<chat_id>/filter` endpoint. This API requi
 
 ```json
 {
-    "begin_time": 192937123.342,  // UNIX timestamp, optional
-    "end_time": 192937123.342,    // UNIX timestamp, optional
-    "sender": [1, 2, 3]           // List of user ids, optional
+  "begin_time": 192937123.342, // UNIX timestamp, optional
+  "end_time": 192937123.342, // UNIX timestamp, optional
+  "sender": [1, 2, 3] // List of user ids, optional
 }
 ```
 
@@ -563,7 +615,7 @@ This function handles the `POST /chat/<chat_id>/set_owner` endpoint. This API re
 
 ```json
 {
-    "chat_owner": 1
+  "chat_owner": 1
 }
 ```
 
@@ -681,11 +733,11 @@ If a client-side error occurs, the server will return an error packet with the f
 
 ```json
 {
-    "action": "error",
-    "request_id": 0,
-    "ok": false,
-    "code": 400,
-    "error": "ERROR_MESSAGE"
+  "action": "error",
+  "request_id": 0,
+  "ok": false,
+  "code": 400,
+  "error": "ERROR_MESSAGE"
 }
 ```
 
@@ -744,7 +796,7 @@ Notify the client that a new group chat has been created.
 
   ```json
   {
-    "message": {ChatMessage.to_detailed_struct}
+    "message": `ChatMessage`
   }
   ```
 
@@ -870,7 +922,7 @@ Notify the client that a user has been added to a chat.
 
   ```json
   {
-    "chat": {Chat.to_struct}
+    "chat": `Chat`
   }
   ```
 
@@ -885,7 +937,7 @@ Notify the client that a chat has been deleted.
 
   ```json
   {
-    "invitation": {ChatInvitation.to_struct}
+    "invitation": `ChatInvitation`
   }
   ```
 
@@ -900,7 +952,7 @@ Notify the client that a new chat invitation has been sent.
 
   ```json
   {
-    "friend": {User.to_detailed_struct}
+    "friend": `User.Detailed`
   }
   ```
 
@@ -915,7 +967,7 @@ Notify the client that a friend has been deleted.
 
   ```json
   {
-    "friend": {User.to_detailed_struct}
+    "friend": `User.Detailed`
   }
   ```
 
