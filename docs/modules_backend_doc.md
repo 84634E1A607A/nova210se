@@ -65,7 +65,9 @@ Main project files are shown below:
 
 The backend uses HTTP Session to authenticate users. When any request arrives, authenication process looks like:
 
-![Authentication process](./request_auth.png)
+<div style="text-align: center;">
+<img alt="Authentication process" src="./request_auth.png" style="width: 95%;" />
+</div>
 
 A similiar process is used for websocket messages to ensure the message is valid JSON.
 
@@ -77,11 +79,15 @@ Most operations in this software are straightforward, but some operations are co
 
 The ideal chat member invitation process is as follows:
 
-![Ideal chat member invitation process](./ideal_chat_invitation.png)
+<div style="text-align: center;">
+<img alt="Ideal chat member invitation process" src="./ideal_chat_invitation.png" style="width: 60%;"/>
+</div>
 
 For simplicity, we have implemented a simplified version of the process:
 
-![Actual chat member invitation process](./actual_chat_invitation.png)
+<div style="text-align: center;">
+<img alt="Actual chat member invitation process" src="./actual_chat_invitation.png" style="width: 60%;"/>
+</div>
 
 We would like to implement the ideal process in the future, if possible.
 
