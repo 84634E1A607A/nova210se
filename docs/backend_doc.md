@@ -209,90 +209,90 @@ API structure: `to_struct` method.
 
 ```python
     # Login to the system
-    path('user/login', user.login, name='user_login'),
+    path('user/login', user.login),
 
     # Register to the system
-    path('user/register', user.register, name='user_register'),
+    path('user/register', user.register),
 
     # Logout from the system
-    path('user/logout', user.logout, name='user_logout'),
+    path('user/logout', user.logout),
 
     # Query user information, patch update and delete user
-    path('user', user.query, name='user'),
+    path('user', user.query),
 
     # Get user information by ID
-    path('user/<int:_id>)', user.get_user_info_by_id, name='user_by_id'),
+    path('user/<int:_id>)', user.get_user_info_by_id),
 ```
 
 ### Friend and friend group
 
 ```python
     # Add friend group
-    path('friend/group/add', friend_group.add, name="friend_group_add"),
+    path('friend/group/add', friend_group.add),
 
     # Get friend group information, patch update and delete friend group
-    path('friend/group/<int:group_id>', friend_group.query, name='friend_group_query'),
+    path('friend/group/<int:group_id>', friend_group.query),
 
     # List friend groups
-    path('friend/group/list', friend_group.list_groups, name='friend_group_list'),
+    path('friend/group/list', friend_group.list_groups),
 
     # Search for friends
-    path('friend/find', friend.find, name='friend_find'),
+    path('friend/find', friend.find),
 
     # Send friend invitation
-    path('friend/invite', friend.send_invitation, name='friend_invite'),
+    path('friend/invite', friend.send_invitation),
 
     # List friend invitations
-    path('friend/invitation', friend.list_invitation, name='friend_list_invitation'),
+    path('friend/invitation', friend.list_invitation),
 
     # Respond to friend invitation, accept or reject
-    path('friend/invitation/<int:invitation_id>', friend.respond_to_invitation, name='friend_respond_to_invitation'),
+    path('friend/invitation/<int:invitation_id>', friend.respond_to_invitation),
 
     # List friends
-    path('friend', friend.list_friend, name='friend_list_friend'),
+    path('friend', friend.list_friend),
 
     # Get friend information, update nickname, delete friend
-    path('friend/<int:friend_user_id>', friend.query, name='friend_query'),
+    path('friend/<int:friend_user_id>', friend.query),
 ```
 
 ### Private chat and group chat
 
 ```python
     # Create a new chat
-    path('chat/new', chat.new_chat, name='chat_new'),
+    path('chat/new', chat.new_chat),
 
     # Invite a user to a chat
-    path('chat/<int:chat_id>/invite', chat.invite_to_chat, name='chat_invite'),
+    path('chat/<int:chat_id>/invite', chat.invite_to_chat),
 
     # List chat invitations
-    path('chat/<int:chat_id>/invitation', chat.list_invitation, name='chat_list_invitation'),
+    path('chat/<int:chat_id>/invitation', chat.list_invitation),
 
     # Respond to chat invitation, accept or reject
-    path('chat/<int:chat_id>/invitation/<int:user_id>', chat.respond_to_invitation, name='chat_respond_to_invitation'),
+    path('chat/<int:chat_id>/invitation/<int:user_id>', chat.respond_to_invitation),
 
     # Get chat information, update chat, delete chat
-    path('chat/<int:chat_id>', chat.query_chat, name='chat_get_delete'),
+    path('chat/<int:chat_id>', chat.query_chat),
 
     # List chats
-    path('chat', chat.list_chats, name='chat_list'),
+    path('chat', chat.list_chats),
 
     # Toggle chat admin
-    path('chat/<int:chat_id>/<int:member_id>/admin', chat.set_admin, name='chat_set_admin'),
+    path('chat/<int:chat_id>/<int:member_id>/admin', chat.set_admin),
 
     # Set chat owner
-    path('chat/<int:chat_id>/set_owner', chat.set_owner, name='chat_set_owner'),
+    path('chat/<int:chat_id>/set_owner', chat.set_owner),
 
     # Remove chat member
-    path('chat/<int:chat_id>/<int:member_id>', chat.remove_member, name='chat_remove_member'),
+    path('chat/<int:chat_id>/<int:member_id>', chat.remove_member),
 
     # List chat messages
-    path('chat/<int:chat_id>/messages', chat.get_messages, name='chat_list_messages'),
+    path('chat/<int:chat_id>/messages', chat.get_messages),
 
     # Find chat messages
-    path('chat/<int:chat_id>/filter', chat.filter_messages, name='chat_filter_messages'),
+    path('chat/<int:chat_id>/filter', chat.filter_messages),
 
     # Catch all and return 404
-    re_path('.*?', api_utils.not_found, name='not_found'),
+    re_path('.*?', api_utils.not_found),
 ]
 ```
 
