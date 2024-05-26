@@ -113,3 +113,100 @@ Now the user is completely deleted from the database without a chance to recover
 Detailed comments and documentation is written in the source code. Please refer to the source code for more information.
 
 For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
+
+## Database structure & ORM & API data structure
+
+### User model
+
+Stores user information, database table name `main_user`.
+
+Table relations:
+
+- `auth_user`: Foreign key to Django's default user model, used for authentication. Database column `auth_user_id`, linked to `auth_user.id`.
+- `default_group`: Foreign key to the default friend group of the user. Database column `default_group_id`, linked to `main_friendgroup.id`.
+
+API structure:
+
+`to_basic_struct` and `to_detail_struct` methods are provided to convert the model to a JSON-serializable dictionary.
+
+### FriendGroup model
+
+Stores friend group information, database table name `main_friendgroup`.
+
+Table relations:
+
+- `user`: Foreign key to the user who owns the friend group. Database column `user_id`, linked to `main_user.id`.
+
+API structure: `to_struct` method.
+
+### Friend model
+
+Stores friend information, database table name `main_friend`.
+
+Table relations:
+
+- `user`: Foreign key to the user who owns the friend. Database column `user_id`, linked to `main_user.id`.
+- `friend`: Foreign key to the friend user. Database column `friend_id`, linked to `main_user.id`.
+- `group`: Foreign key to the friend group the friend is in. Database column `group_id`, linked to `main_friendgroup.id`.
+
+API structure: `to_struct` method.
+
+### FriendInvitation model
+
+Stores friend invitation information, database table name `main_friendinvitation`.
+
+Table relations:
+
+- `sender`: Foreign key to the user who sent the invitation. Database column `sender_id`, linked to `main_user.id`.
+- `receiver`: Foreign key to the user who received the invitation. Database column `receiver_id`, linked to `main_user.id`.
+
+API structure: `to_struct` method.
+
+### Chat model
+
+Stores chat information, database table name `main_chat`, `main_chat_admins`, `main_chat_members`.
+
+Table relations:
+
+- `owner`: Foreign key to the user who owns the chat. Database column `owner_id`, linked to `main_user.id`.
+- `members`: Many-to-many relation to the users who are in the chat. Database table `main_chat_members`, `chat_id` linked to `main_chat.id`, `user_id` linked to `main_user.id`.
+- `admins`: Many-to-many relation to the users who are admins of the chat. Database table `main_chat_admins`, `chat_id` linked to `main_chat.id`, `user_id` linked to `main_user.id`.
+
+API structure: `to_struct` method.
+
+### UserChatRelation model
+
+Stores user-specific chat information, database table name `main_userchatrelation`.
+
+Table relations:
+
+- `user`: Foreign key to the user who is in the chat. Database column `user_id`, linked to `main_user.id`.
+- `chat`: Foreign key to the chat the user is in. Database column `chat_id`, linked to `main_chat.id`.
+
+API structure: `to_struct` method.
+
+### ChatMessage model
+
+Stores chat message information, database table name `main_chatmessage`, `main_chatmessage_read_users`, `main_chatmessage_deleted_users`.
+
+Table relations:
+
+- `chat`: Foreign key to the chat the message is in. Database column `chat_id`, linked to `main_chat.id`.
+- `sender`: Foreign key to the user who sent the message. Database column `sender_id`, linked to `main_user.id`.
+- `reply_to`: Foreign key to the message the message is replying to. Database column `reply_to_id`, linked to `main_chatmessage.id`.
+- `read_users`: Many-to-many relation to the users who have read the message. Database table `main_chatmessage_read_users`, `message_id` linked to `main_chatmessage.id`, `user_id` linked to `main_user.id`.
+- `deleted_users`: Many-to-many relation to the users who have deleted the message. Database table `main_chatmessage_deleted_users`, `message_id` linked to `main_chatmessage.id`, `user_id` linked to `main_user.id`.
+
+API structure: `to_basic_struct` and `to_detailed_struct` method.
+
+### ChatInvitation model
+
+Stores chat invitation information, database table name `main_chatinvitation`.
+
+Table relations:
+
+- `invited_by`: Foreign key to the user who sent the invitation. Database column `invited_by_id`, linked to `main_user.id`.
+- `chat`: Foreign key to the chat the user is invited to. Database column `chat_id`, linked to `main_chat.id`.
+- `user`: Foreign key to the user who received the invitation. Database column `user_id`, linked to `main_user.id`.
+
+API structure: `to_struct` method.
