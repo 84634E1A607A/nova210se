@@ -108,12 +108,6 @@ From here on, the function returns, but the following things will happen:
 
 Now the user is completely deleted from the database without a chance to recover.
 
-## Where to find more information
-
-Detailed comments and documentation is written in the source code. Please refer to the source code for more information.
-
-For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
-
 ## Database structure & ORM & API data structure
 
 ### User model
@@ -125,9 +119,7 @@ Table relations:
 - `auth_user`: Foreign key to Django's default user model, used for authentication. Database column `auth_user_id`, linked to `auth_user.id`.
 - `default_group`: Foreign key to the default friend group of the user. Database column `default_group_id`, linked to `main_friendgroup.id`.
 
-API structure:
-
-`to_basic_struct` and `to_detail_struct` methods are provided to convert the model to a JSON-serializable dictionary.
+API structure: `to_basic_struct` and `to_detail_struct` methods are provided to convert the model to a JSON-serializable dictionary.
 
 ### FriendGroup model
 
@@ -210,3 +202,106 @@ Table relations:
 - `user`: Foreign key to the user who received the invitation. Database column `user_id`, linked to `main_user.id`.
 
 API structure: `to_struct` method.
+
+## Application Programming Interface
+
+### User related
+
+```python
+    # Login to the system
+    path('user/login', user.login, name='user_login'),
+
+    # Register to the system
+    path('user/register', user.register, name='user_register'),
+
+    # Logout from the system
+    path('user/logout', user.logout, name='user_logout'),
+
+    # Query user information, patch update and delete user
+    path('user', user.query, name='user'),
+
+    # Get user information by ID
+    path('user/<int:_id>)', user.get_user_info_by_id, name='user_by_id'),
+```
+
+### Friend and friend group
+
+```python
+    # Add friend group
+    path('friend/group/add', friend_group.add, name="friend_group_add"),
+
+    # Get friend group information, patch update and delete friend group
+    path('friend/group/<int:group_id>', friend_group.query, name='friend_group_query'),
+
+    # List friend groups
+    path('friend/group/list', friend_group.list_groups, name='friend_group_list'),
+
+    # Search for friends
+    path('friend/find', friend.find, name='friend_find'),
+
+    # Send friend invitation
+    path('friend/invite', friend.send_invitation, name='friend_invite'),
+
+    # List friend invitations
+    path('friend/invitation', friend.list_invitation, name='friend_list_invitation'),
+
+    # Respond to friend invitation, accept or reject
+    path('friend/invitation/<int:invitation_id>', friend.respond_to_invitation, name='friend_respond_to_invitation'),
+
+    # List friends
+    path('friend', friend.list_friend, name='friend_list_friend'),
+
+    # Get friend information, update nickname, delete friend
+    path('friend/<int:friend_user_id>', friend.query, name='friend_query'),
+```
+
+### Private chat and group chat
+
+```python
+    # Create a new chat
+    path('chat/new', chat.new_chat, name='chat_new'),
+
+    # Invite a user to a chat
+    path('chat/<int:chat_id>/invite', chat.invite_to_chat, name='chat_invite'),
+
+    # List chat invitations
+    path('chat/<int:chat_id>/invitation', chat.list_invitation, name='chat_list_invitation'),
+
+    # Respond to chat invitation, accept or reject
+    path('chat/<int:chat_id>/invitation/<int:user_id>', chat.respond_to_invitation, name='chat_respond_to_invitation'),
+
+    # Get chat information, update chat, delete chat
+    path('chat/<int:chat_id>', chat.query_chat, name='chat_get_delete'),
+
+    # List chats
+    path('chat', chat.list_chats, name='chat_list'),
+
+    # Toggle chat admin
+    path('chat/<int:chat_id>/<int:member_id>/admin', chat.set_admin, name='chat_set_admin'),
+
+    # Set chat owner
+    path('chat/<int:chat_id>/set_owner', chat.set_owner, name='chat_set_owner'),
+
+    # Remove chat member
+    path('chat/<int:chat_id>/<int:member_id>', chat.remove_member, name='chat_remove_member'),
+
+    # List chat messages
+    path('chat/<int:chat_id>/messages', chat.get_messages, name='chat_list_messages'),
+
+    # Find chat messages
+    path('chat/<int:chat_id>/filter', chat.filter_messages, name='chat_filter_messages'),
+
+    # Catch all and return 404
+    re_path('.*?', api_utils.not_found, name='not_found'),
+]
+```
+
+## Where to find more information
+
+Detailed comments and documentation is written in the source code. Please refer to the source code for more information.
+
+For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
+
+## Appendix A: Detailed API documentation
+
+! Include api_doc.md here
