@@ -17,9 +17,9 @@ We use Sqlite3 as the database, Django ORM is used to interact with the database
 The directory structure of the backend project is as follows:
 
 - `backend/`: Root directory of the backend project
-  - `manage.py`: Django's default entrance point for running commands and starting the server in debug environment
+  - `manage.py`: Django's default entrance point
   - `Dockerfile`: Dockerfile for building the backend image
-  - `requirements.txt`: Python requirements file, states the top-level dependencies of the project
+  - `requirements.txt`: Python requirements file, states the ***top-level*** dependencies
   - `start.sh`: Docker image entrypoint script
   - `backend/`: Django project directory
     - `settings.py`: Django project settings file
@@ -39,13 +39,13 @@ Main project files are shown below:
   - `_chat.py`: Chat model, stores private / group chat information
   - `_user_chat_relation.py`: UserChatRelation model, stores user-specific chat information
   - `_chat_message.py`: ChatMessage model, stores chat message information
-  - `_chat_invitation.py`: ChatInvitation model, stores chat invitation information
+  - `_chat_invitation.py`: ChatInvitation model, stores chat invitation
 - `views/`: Directory for storing Django views
   - `__init__.py`: Empty file to make the directory a package
-  - `user.py`: User views, handles user-related operations, including login / register / get info / etc.
-  - `friend_group.py`: FriendGroup views, handles friend group-related operations, including create / list / delete / etc.
-  - `friend.py`: Friend views, handles friend-related operations, including invite / list / delete / etc.
-  - `chat.py`: Chat views, handles chat-related operations, including create / list / delete / set owner / etc.
+  - `user.py`: User views, handles user-related operations, including login / register / get info
+  - `friend_group.py`: FriendGroup views, handles friend group-related operations, including create / list / delete
+  - `friend.py`: Friend views, handles friend-related operations, including invite / list / delete
+  - `chat.py`: Chat views, handles chat-related operations, including create / list / set owner
   - `generate_avatar.py`: Utility to generate random avatars
   - `api_utils.py`: Foundamental API utilities, for example API decorators
 - `ws/`: Directory for the main websocket consumer
@@ -63,13 +63,11 @@ Main project files are shown below:
 
 ## Understanding authentication mechanism
 
-The backend uses HTTP Session to authenticate users. When any request arrives, authenication process looks like:
+The backend uses HTTP Session to authenticate users. When any request arrives, authenication process looks like the folling graph; A similiar process is used for websocket messages to ensure the message is valid JSON.
 
 <div style="text-align: center;">
 <img alt="Authentication process" src="./request_auth.png" style="width: 95%;" />
 </div>
-
-A similiar process is used for websocket messages to ensure the message is valid JSON.
 
 ## Understanding complex operations
 
@@ -77,18 +75,12 @@ Most operations in this software are straightforward, but some operations are co
 
 ### Group chat member invitation
 
-The ideal chat member invitation process is as follows:
+The ideal chat member invitation process is as follows. For simplicity, we have implemented a simplified version of the process:
 
-<div style="text-align: center;">
-<img alt="Ideal chat member invitation process" src="./ideal_chat_invitation.png" style="width: 60%;"/>
+<div style="text-align: center; display: flex; flex-direction: row;">
+<img alt="Ideal chat member invitation process" src="./ideal_chat_invitation.png" style="width: 45%; margin: auto;"/>
+<img alt="Actual chat member invitation process" src="./actual_chat_invitation.png" style="width: 45%; margin: auto;"/>
 </div>
-
-For simplicity, we have implemented a simplified version of the process:
-
-<div style="text-align: center;">
-<img alt="Actual chat member invitation process" src="./actual_chat_invitation.png" style="width: 60%;"/>
-</div>
-
 We would like to implement the ideal process in the future, if possible.
 
 ### User deletion
