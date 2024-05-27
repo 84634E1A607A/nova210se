@@ -1,3 +1,0 @@
-## State Management
-
-The state needed across the different components of the APP are stored and managed simply by standard `react context` or prop drilling. Neither Redux nor RxJS is used in this project because of the relatively minuscule size of the project. The state is managed in a way that is straightforward, easy to understand and maintain. If a state is needed by a child component, it is passed down as a prop. If a state is needed across components of different ancestors or should be updated by a child component, it is stored in a context provider that wraps the components that need the state. The state itself is for the most part initialized by `useState` and updated by the corresponding `setState`.

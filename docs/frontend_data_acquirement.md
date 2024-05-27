@@ -1,7 +1,0 @@
-## Data Acquirement from RESTful APIs
-
-Except for the data that travels through websockets due to the real-time demand, all the interactions are by RESTful APIs. There are two major components that are used for getting or acquiring data: loader from react-router and react-query from TanStack. These are two official or semi-official libraries that are widely used for RESTful API interaction and are powerful and flexible enough for a project with this kind of scale.
-
-Loaders are used in most parts of data acquirement. When they're used, react-query is always bundled together to make deferred data fetching possible. This can make sure the page is not blocked by the data fetching process. QueryClient of react-query likewise manages the cache and reuses the data that has been fetched before. This can make sure the data is not fetched redundantly. If any update is needed, deleting the cache will commence the refetch process.
-
-In the most interative and instant part of data fetching and updating, which is messasges display, `useQuery` from react-query is used. This will also ensure the cache part. What's more, an out-of-box custom context makes use of `refetch` from the return value of `useQuery` and can be used in any part of the APP to trigger the refetch process without a heavy load of rendering due to the benefit of react-query on receiving the corresponding websocket notifications. So new messages can be displayed in real-time with a very low latency.
