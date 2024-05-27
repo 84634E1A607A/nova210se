@@ -184,6 +184,8 @@ In the most interative and instant part of data fetching and updating, which is 
 
 ## Websocket Interaction for Sending and Receving Messages in a Chat
 
-__Shown in the sequence diagram below.__
+Notification machenism based on WebSocket is utilized to send and receive messages. Several events occur when a message is sent in the order of the following graph.
 
-<img src="message_in_chat.png" width="800" height="400" />
+<div style="text-align: center;">
+<img alt="Send a message in chat" src="./message_in_chat.png" style="width: 95%;" />
+</div>
