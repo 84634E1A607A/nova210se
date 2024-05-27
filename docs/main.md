@@ -2,114 +2,17 @@
 
 ## Modules in Frontend
 
-```tree
-.
-├── nginx
-├── src
-│   ├── App.tsx   General framework entry point of the APP.
-│   ├── chat_control   Related to chat rooms and messages.
-│   │   ├── components
-│   │   │   ├── ApplicationsForChatList.tsx   Show applications for a chat if the user is admin or higher.
-│   │   │   ├── InviteFriendIntoChat.tsx   Component to select friends to invite into chat.
-│   │   │   ├── MessageAssociateInfo.tsx   Display send time and read count or read by whom.
-│   │   │   ├── MessageContent.tsx   Message content container.
-│   │   │   ├── MessageTab.tsx   Each for a message separately. Then calls others like MessageContent.
-│   │   │   ├── MessagesFilterContainer.tsx   Filter messages by time and sender.
-│   │   │   ├── NoticeCard.tsx   Show a single notice in a group chat.
-│   │   │   ├── NoticesBar.tsx   Show notices in a group chat beneath the header.
-│   │   │   ├── RepliedMessageTab.tsx   Display the replied message.
-│   │   │   ├── SIngleUserTab.tsx   Display members info in MoreOfChat page.
-│   │   │   ├── SingleChatTab.tsx   Each tab in the chats list.
-│   │   │   └── UserTabTemplate.tsx   For multiselect component to show each user.
-│   │   ├── createGroupChat.ts   Create a group chat api.
-│   │   ├── deleteChat.ts   Delete a chat api.
-│   │   ├── filterMessages.ts   Filter messages by time and sender.
-│   │   ├── getChatInfo.ts   Get the chat info api.
-│   │   ├── getChats.ts   Get all the chats api.
-│   │   ├── getDetailedMessages.ts   Get all the messages in a chat room.
-│   │   ├── getDetailedMessagesVerbosely.ts   Get all the messages in a chat room with verbose return value.
-│   │   ├── inviteToGroupChat.ts   Invite a friend to a group chat api.
-│   │   ├── kickoutMember.ts   Kick out a member from a group chat api.
-│   │   ├── leaveChat.ts   Leave a chat api.
-│   │   ├── listApplicationsForAllChats.ts   List all the applications for all chats.
-│   │   ├── listApplicationsForChat.ts   List all the applications for a chat api.
-│   │   ├── pages
-│   │   │   ├── ChatHeader.tsx   The header of the chat room.
-│   │   │   ├── ChatMainPageFramework.tsx   The whole chat module framework including all chats and single chat.
-│   │   │   ├── ChatSideBar.tsx   Display chats list in the left side.
-│   │   │   ├── CreateGroupChat.tsx   Create a group chat using friends.
-│   │   │   ├── DialogBox.tsx   Display the bottom dialog box to enter messages.
-│   │   │   ├── Dialogs.tsx   Display all messages in a chat room.
-│   │   │   ├── MoreOfChat.tsx   Display the chat management page and members. 
-│   │   │   ├── SingleChatMain.tsx   The container for header, dialogs and dialog box of one chat.
-│   │   ├── respondToApplicationForChat.ts
-│   │   ├── setAdmin.ts
-│   │   ├── states   Related to state management (context).
-│   │   ├── transferOwner.ts
-│   ├── friend_control   Related to managing friends relations and groups.
-│   │   ├── DeleteFriendButton.tsx   Click and delete friend.
-│   │   ├── FriendsForEachGroupList.tsx   Friends list in a single group.
-│   │   ├── FriendsList.tsx   Friends list that will sort by groups and use the above to display.
-│   │   ├── FriendsPage.tsx   Load friends and groups and call the above to display.
-│   │   ├── GroupSetting.tsx   Setting component for each group.
-│   │   ├── InviteFriendPage.tsx   Component that will pop up to write comments and invite a friend.
-│   │   ├── OngoingInvitations.tsx   Display the friendship invitations.
-│   │   ├── SearchNewFriend.tsx   Page for searching others.
-│   │   ├── SearchNewFriendResultList.tsx   Display the search results.
-│   │   ├── SingleFriendSetting.tsx   Setting component for each friend, for example, belonged group.
-│   │   ├── UserDisplayTab.tsx   Display the user info in the friends list.
-│   │   ├── acceptInvitation.ts   Accept the invitation api.
-│   │   ├── createGroup.ts   Create a group api.
-│   │   ├── deleteFriend.ts   Delete a friend api.
-│   │   ├── deleteGroup.ts   Delete a group api.
-│   │   ├── editGroupName.ts   Edit a group name api.
-│   │   ├── getDefaultGroup.ts   Get the default group by checking whether name is empty string.
-│   │   ├── getFriendInfo.ts   Get the friend info api.
-│   │   ├── getFriendsList.ts   Get the friends list api.
-│   │   ├── getGroupsList.ts   Get the groups list api.
-│   │   ├── getInvitations.ts   Get the pending invitations api.
-│   │   ├── invite.ts   Invite a friend api.
-│   │   ├── queryGroup.ts   Query a group info api.
-│   │   ├── rejectInvitation.ts   Reject the invitation api.
-│   │   ├── searchFriend.ts   Search users api.
-│   │   ├── updateFriend.ts   Update the friend setting api.
-│   │   └── utils   Get appropriate name to display for a user.
-│   ├── index.tsx   Router definition and the entry point of the APP.
-│   ├── main_page
-│   │   ├── MainPageFramework.tsx   The main framework that users see except for login page.
-│   │   └── SideBarLink.tsx   Left-side links used in MainPageFramework.
-│   ├── user_control   Related to the current user herself or himself.
-│   │   ├── AccountManagement.tsx   User settings page.
-│   │   ├── DisplayCurrentUserInfo.tsx   Display user in the top left corner.
-│   │   ├── Login.tsx   Login page.
-│   │   ├── RouterGuard.tsx   Prevent user from accessing illegal pages.
-│   │   ├── components   Except for the first one, all for editing user info.
-│   │   │   ├── DetailedInfoPopup.tsx   Display detailed user info when click avatar.
-│   │   │   ├── DialogFormSubmitButton.tsx
-│   │   │   ├── DialogOldPasswordInput.tsx
-│   │   │   └── EditDialog.tsx
-│   │   ├── deleteAccount.ts   Delete user account api.
-│   │   ├── editUserInfo.ts   Edit user info api.
-│   │   ├── getUserInfo.ts   Get current user info api.
-│   │   ├── handleSubmittedLoginInfo.ts   Handle login or register.
-│   │   ├── isValidPath.ts   Check if the path is valid in router guard.
-│   │   ├── logout.ts   Logout api.
-│   ├── utils
-│   │   ├── Asserts.ts | AssertsForRouterLoader.ts   Type assertions for typescript.
-│   │   ├── ErrorPage.tsx   Router error page.
-│   │   ├── Loaders.ts   Data loaders.
-│   │   ├── Types.ts   General types used in the APP.
-│   │   ├── ValidationError.tsx   Validation error component in forms.
-│   │   ├── consts   General consts used in the APP.
-│   │   ├── router
-│   │   │   ├── RouteParamsHooks.ts   Conveninetly get the params from the URL.
-│   │   │   └── RouterPaths.ts   Router (url) paths as consts.
-│   └── websockets
-│       ├── Actions.ts   All the websocket actions used.
-│       ├── WSTypes.ts   Data type of websocket messages.
-│       └── component
-│           └── UpdateDataCompanion.tsx   Deal with almost all the operations on receiving data.
-```
+The following section lists the main modules in the frontend of the Nova 210 SE project. For detailed information, see Appendix.
+
+- `index.tsx`: Router definition and the entry point of the APP.
+- `utils/`: General utilities used in the APP, including type assertions, error page, data loaders, general types, validation error component, general consts, router paths, and websocket actions.
+- `main_page/`: The main framework that users see except for the login page.
+- `user_control/`: Related to the current user, including user settings page, login page, router guard, and components for diaplaying and editing user info.
+- `friend_control/`: Related to managing friends relations and groups, including components for displaying friends and groups, and APIs for managing friends and groups.
+- `chat_control/`: Related to chat rooms and messages, including components for displaying chats and messages, and APIs to manage them.
+- `websockets/`: Websocket actions used in the APP, including data type definitions of websocket messages and a component to deal with received data.
+
+Within each module, classes and functions are grouped by their functionalities. A `conponents` folder may present, containing all UI elements; while data related functions are placed in the root of the module.
 
 ## State Management
 
@@ -130,10 +33,6 @@ Notification machenism based on WebSocket is utilized to send and receive messag
 <div style="text-align: center;">
 <img alt="Send a message in chat" src="./message_in_chat.png" style="width: 95%;" />
 </div>
-
-# Nova 210 SE: Backend Documentation
-
-This document describes the backend modules and generic ideas of the Nova 210 SE project.
 
 ## General structure
 
@@ -435,7 +334,132 @@ Detailed comments and documentation is written in the source code. Please refer 
 
 For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
 
-## Appendix A: Detailed API documentation
+# Appendix A: Detailed frontend modules
+
+The detailed structure of the frontend project is as follows:
+
+```text
+.
+├── nginx
+├── src
+│   ├── index.tsx   Router definition and the entry point of the APP.
+│   ├── App.tsx   General framework entry point of the APP.
+│   ├── main_page
+│   │   ├── MainPageFramework.tsx   The main framework that users see except for login page.
+│   │   └── SideBarLink.tsx   Left-side links used in MainPageFramework.
+```
+
+```text
+│   ├── user_control   Related to the current user herself or himself.
+│   │   ├── AccountManagement.tsx   User settings page.
+│   │   ├── DisplayCurrentUserInfo.tsx   Display user in the top left corner.
+│   │   ├── Login.tsx   Login page.
+│   │   ├── RouterGuard.tsx   Prevent user from accessing illegal pages.
+│   │   ├── components   Except for the first one, all for editing user info.
+│   │   │   ├── DetailedInfoPopup.tsx   Display detailed user info when click avatar.
+│   │   │   ├── DialogFormSubmitButton.tsx
+│   │   │   ├── DialogOldPasswordInput.tsx
+│   │   │   └── EditDialog.tsx
+│   │   ├── deleteAccount.ts   Delete user account api.
+│   │   ├── editUserInfo.ts   Edit user info api.
+│   │   ├── getUserInfo.ts   Get current user info api.
+│   │   ├── handleSubmittedLoginInfo.ts   Handle login or register.
+│   │   ├── isValidPath.ts   Check if the path is valid in router guard.
+│   │   ├── logout.ts   Logout api.
+```
+
+```text
+│   ├── friend_control   Related to managing friends relations and groups.
+│   │   ├── DeleteFriendButton.tsx   Click and delete friend.
+│   │   ├── FriendsForEachGroupList.tsx   Friends list in a single group.
+│   │   ├── FriendsList.tsx   Friends list that will sort by groups and use the above to display.
+│   │   ├── FriendsPage.tsx   Load friends and groups and call the above to display.
+│   │   ├── GroupSetting.tsx   Setting component for each group.
+│   │   ├── InviteFriendPage.tsx   Component that will pop up to write comments and invite a friend.
+│   │   ├── OngoingInvitations.tsx   Display the friendship invitations.
+│   │   ├── SearchNewFriend.tsx   Page for searching others.
+│   │   ├── SearchNewFriendResultList.tsx   Display the search results.
+│   │   ├── SingleFriendSetting.tsx   Setting component for each friend, for example, belonged group.
+│   │   ├── UserDisplayTab.tsx   Display the user info in the friends list.
+│   │   ├── acceptInvitation.ts   Accept the invitation api.
+│   │   ├── createGroup.ts   Create a group api.
+│   │   ├── deleteFriend.ts   Delete a friend api.
+│   │   ├── deleteGroup.ts   Delete a group api.
+│   │   ├── editGroupName.ts   Edit a group name api.
+│   │   ├── getDefaultGroup.ts   Get the default group by checking whether name is empty string.
+│   │   ├── getFriendInfo.ts   Get the friend info api.
+│   │   ├── getFriendsList.ts   Get the friends list api.
+│   │   ├── getGroupsList.ts   Get the groups list api.
+│   │   ├── getInvitations.ts   Get the pending invitations api.
+│   │   ├── invite.ts   Invite a friend api.
+│   │   ├── queryGroup.ts   Query a group info api.
+│   │   ├── rejectInvitation.ts   Reject the invitation api.
+│   │   ├── searchFriend.ts   Search users api.
+│   │   ├── updateFriend.ts   Update the friend setting api.
+│   │   └── utils   Get appropriate name to display for a user.
+```
+
+```text
+│   ├── chat_control   Related to chat rooms and messages.
+│   │   ├── components
+│   │   │   ├── ApplicationsForChatList.tsx   Show applications for a chat if the user is admin or higher.
+│   │   │   ├── InviteFriendIntoChat.tsx   Component to select friends to invite into chat.
+│   │   │   ├── MessageAssociateInfo.tsx   Display send time and read count or read by whom.
+│   │   │   ├── MessageContent.tsx   Message content container.
+│   │   │   ├── MessageTab.tsx   Each for a message separately. Then calls others like MessageContent.
+│   │   │   ├── MessagesFilterContainer.tsx   Filter messages by time and sender.
+│   │   │   ├── NoticeCard.tsx   Show a single notice in a group chat.
+│   │   │   ├── NoticesBar.tsx   Show notices in a group chat beneath the header.
+│   │   │   ├── RepliedMessageTab.tsx   Display the replied message.
+│   │   │   ├── SIngleUserTab.tsx   Display members info in MoreOfChat page.
+│   │   │   ├── SingleChatTab.tsx   Each tab in the chats list.
+│   │   │   └── UserTabTemplate.tsx   For multiselect component to show each user.
+│   │   ├── createGroupChat.ts   Create a group chat api.
+│   │   ├── deleteChat.ts   Delete a chat api.
+│   │   ├── filterMessages.ts   Filter messages by time and sender.
+│   │   ├── getChatInfo.ts   Get the chat info api.
+│   │   ├── getChats.ts   Get all the chats api.
+│   │   ├── getDetailedMessages.ts   Get all the messages in a chat room.
+│   │   ├── getDetailedMessagesVerbosely.ts   Get all the messages in a chat room with verbose return value.
+│   │   ├── inviteToGroupChat.ts   Invite a friend to a group chat api.
+│   │   ├── kickoutMember.ts   Kick out a member from a group chat api.
+│   │   ├── leaveChat.ts   Leave a chat api.
+│   │   ├── listApplicationsForAllChats.ts   List all the applications for all chats.
+│   │   ├── listApplicationsForChat.ts   List all the applications for a chat api.
+│   │   ├── pages
+│   │   │   ├── ChatHeader.tsx   The header of the chat room.
+│   │   │   ├── ChatMainPageFramework.tsx   The whole chat module framework including all chats and single chat.
+│   │   │   ├── ChatSideBar.tsx   Display chats list in the left side.
+│   │   │   ├── CreateGroupChat.tsx   Create a group chat using friends.
+│   │   │   ├── DialogBox.tsx   Display the bottom dialog box to enter messages.
+│   │   │   ├── Dialogs.tsx   Display all messages in a chat room.
+│   │   │   ├── MoreOfChat.tsx   Display the chat management page and members. 
+│   │   │   ├── SingleChatMain.tsx   The container for header, dialogs and dialog box of one chat.
+│   │   ├── respondToApplicationForChat.ts
+│   │   ├── setAdmin.ts
+│   │   ├── states   Related to state management (context).
+│   │   ├── transferOwner.ts
+```
+
+```text
+│   ├── utils
+│   │   ├── Asserts.ts | AssertsForRouterLoader.ts   Type assertions for typescript.
+│   │   ├── ErrorPage.tsx   Router error page.
+│   │   ├── Loaders.ts   Data loaders.
+│   │   ├── Types.ts   General types used in the APP.
+│   │   ├── ValidationError.tsx   Validation error component in forms.
+│   │   ├── consts   General consts used in the APP.
+│   │   ├── router
+│   │   │   ├── RouteParamsHooks.ts   Conveninetly get the params from the URL.
+│   │   │   └── RouterPaths.ts   Router (url) paths as consts.
+│   └── websockets
+│       ├── Actions.ts   All the websocket actions used.
+│       ├── WSTypes.ts   Data type of websocket messages.
+│       └── component
+│           └── UpdateDataCompanion.tsx   Deal with almost all the operations on receiving data.
+```
+
+# Appendix B: Detailed API documentation
 
 This section describes the API endpoints and their usage in the Nova 210 SE project.
 
