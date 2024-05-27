@@ -1,5 +1,21 @@
 # Nova 210 SE: Documentation
 
+## User Stories
+
+- As a user, I want basic user mamagement functions and friend management functions.
+
+<div style="text-align: center;">
+<img alt="User Stories" src="./user.jpg" style="width: 60%;" />
+</div>
+
+- As a user, I want to chat with my friends in real-time.
+- As a user, I want to chat with my friends in private chat rooms and manage the chat rooms.
+
+<div style="text-align: center; display: flex; flex-direction: row;">
+<img alt="Private Chat Stories" src="./chat.jpg" style="width: 55%; margin: auto;" />
+<img alt="Group Chat Stories", src="./group.jpg" style="width: 39%; margin: auto;">
+</div>
+
 ## Modules in Frontend
 
 The following section lists the main modules in the frontend of the Nova 210 SE project. For detailed information, see Appendix.
@@ -34,7 +50,7 @@ Notification machenism based on WebSocket is utilized to send and receive messag
 <img alt="Send a message in chat" src="./message_in_chat.png" style="width: 95%;" />
 </div>
 
-## General structure
+## Backend General structure
 
 Backend uses django and daphne to provide RESTful API for the frontend.
 
@@ -334,6 +350,10 @@ Detailed comments and documentation is written in the source code. Please refer 
 
 For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
 
+---
+
+<div style="page-break-after: always;"></div>
+
 # Appendix A: Detailed frontend modules
 
 The detailed structure of the frontend project is as follows:
@@ -458,6 +478,10 @@ The detailed structure of the frontend project is as follows:
 │       └── component
 │           └── UpdateDataCompanion.tsx   Deal with almost all the operations on receiving data.
 ```
+
+---
+
+<div style="page-break-after: always;"></div>
 
 # Appendix B: Detailed API documentation
 
