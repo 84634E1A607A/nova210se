@@ -4,16 +4,8 @@
 
 ```tree
 .
-├── Dockerfile
-├── README.md
 ├── nginx
-│   └── frontend.conf
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── sonar-project.properties
 ├── src
-│   ├── App.css   Generate by create-react-app.
 │   ├── App.tsx   General framework entry point of the APP.
 │   ├── chat_control   Related to chat rooms and messages.
 │   │   ├── components
@@ -50,24 +42,10 @@
 │   │   │   ├── Dialogs.tsx   Display all messages in a chat room.
 │   │   │   ├── MoreOfChat.tsx   Display the chat management page and members. 
 │   │   │   ├── SingleChatMain.tsx   The container for header, dialogs and dialog box of one chat.
-│   │   │   └── css
-│   │   │       └── auto-hidden-scroll.css
 │   │   ├── respondToApplicationForChat.ts
 │   │   ├── setAdmin.ts
-│   │   ├── states
-│   │   │   ├── CurrentChatProvider.tsx
-│   │   │   ├── DialogBoxRefProvider.tsx
-│   │   │   ├── MessageRefsProvider.tsx
-│   │   │   ├── RefetchProvider.tsx
-│   │   │   ├── RepliedMessageProvider.tsx
-│   │   │   └── updateChatState.ts
+│   │   ├── states   Related to state management (context).
 │   │   ├── transferOwner.ts
-│   │   ├── ui
-│   │   │   └── MessageTabListItem.ts
-│   │   └── utils
-│   │       ├── getInvitableFriends.ts
-│   │       ├── getIsSelf.ts
-│   │       └── parseSystemMessage.ts
 │   ├── friend_control   Related to managing friends relations and groups.
 │   │   ├── DeleteFriendButton.tsx   Click and delete friend.
 │   │   ├── FriendsForEachGroupList.tsx   Friends list in a single group.
@@ -95,27 +73,11 @@
 │   │   ├── rejectInvitation.ts   Reject the invitation api.
 │   │   ├── searchFriend.ts   Search users api.
 │   │   ├── updateFriend.ts   Update the friend setting api.
-│   │   └── utils   Get appropriate name for any user.
-│   │       ├── parseAnyoneName.ts
-│   │       ├── parseDisplayName.ts
-│   │       └── parseNameOfFirend.ts
-│   ├── index.css   Generate by create-react-app.
+│   │   └── utils   Get appropriate name to display for a user.
 │   ├── index.tsx   Router definition and the entry point of the APP.
 │   ├── main_page
 │   │   ├── MainPageFramework.tsx   The main framework that users see except for login page.
 │   │   └── SideBarLink.tsx   Left-side links used in MainPageFramework.
-│   ├── svg   Svg images.
-│   │   ├── cancel-svgrepo-com.svg
-│   │   ├── fold-down-svgrepo-com.svg
-│   │   ├── fold-up-svgrepo-com.svg
-│   │   ├── more-horizontal-square-svgrepo-com.svg
-│   │   ├── nav-chat-icon.svg
-│   │   ├── nav-friend-icon.svg
-│   │   ├── nav-group-icon.svg
-│   │   ├── nav-invitation-icon.svg
-│   │   ├── nav-search-icon.svg
-│   │   ├── nav-setting-icon.svg
-│   │   └── nav-upcoming-icon.svg
 │   ├── user_control   Related to the current user herself or himself.
 │   │   ├── AccountManagement.tsx   User settings page.
 │   │   ├── DisplayCurrentUserInfo.tsx   Display user in the top left corner.
@@ -132,42 +94,21 @@
 │   │   ├── handleSubmittedLoginInfo.ts   Handle login or register.
 │   │   ├── isValidPath.ts   Check if the path is valid in router guard.
 │   │   ├── logout.ts   Logout api.
-│   │   └── utils
-│   │       ├── userNameFormOptions.ts   Some consts for the form for editting user_name.
-│   │       └── validateUserName.ts   Check extra rules for user_name.
 │   ├── utils
-│   │   ├── Asserts.ts   Type assertions for typescript.
-│   │   ├── AssertsForRouterLoader.ts   Type assertions for Loaders.ts.
+│   │   ├── Asserts.ts | AssertsForRouterLoader.ts   Type assertions for typescript.
 │   │   ├── ErrorPage.tsx   Router error page.
 │   │   ├── Loaders.ts   Data loaders.
-│   │   ├── TestsData.ts   Data built for testing.
 │   │   ├── Types.ts   General types used in the APP.
 │   │   ├── ValidationError.tsx   Validation error component in forms.
 │   │   ├── consts   General consts used in the APP.
-│   │   │   ├── DebugAndDevConsts.ts
-│   │   │   ├── InputRestrictions.ts
-│   │   │   └── SystemValues.ts
-│   │   ├── parseChatName.ts   Parse the chat name that should be displayed.
 │   │   ├── router
 │   │   │   ├── RouteParamsHooks.ts   Conveninetly get the params from the URL.
 │   │   │   └── RouterPaths.ts   Router (url) paths as consts.
-│   │   ├── time   Deal with time related utility features.
-│   │   │   ├── convertDateToUnixTImeStamp.ts
-│   │   │   ├── unixTimestampToClockString.ts
-│   │   │   ├── unixTimestampToDateString.ts
-│   │   │   └── unixTimestampToExactTimeString.ts
-│   │   └── ui   Common UI features and components.
-│   │       ├── Avatar.tsx
-│   │       ├── TailwindConsts.ts
-│   │       └── themes.ts
 │   └── websockets
 │       ├── Actions.ts   All the websocket actions used.
-│       ├── AssertsWS.ts   Type assertions for websocket messages.
 │       ├── WSTypes.ts   Data type of websocket messages.
 │       └── component
 │           └── UpdateDataCompanion.tsx   Deal with almost all the operations on receiving data.
-├── tailwind.config.js
-└── tsconfig.json
 ```
 
 ## State Management
