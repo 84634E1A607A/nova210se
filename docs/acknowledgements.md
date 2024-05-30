@@ -1,0 +1,3 @@
+## Acknowledgements
+
+Thanks to the dedicated work and passion of all the three members of Nova 210 SE, the project requirements can be fully implemented on time with no hastiness. The efforts of previous teams years ahead into the development of the SECoder platform is also acknowledged. The team would also like to thank the lecturers and the TAs for their devotion. On the frontend side, the team would like to thank Carl Rippon for his `Learn React with TypeScript: A beginner's guide to reactive web development with React 18 and TypeScript`. It's his highly layered and easy-to-understand book that helped us to develop the core framework of the frontend.
