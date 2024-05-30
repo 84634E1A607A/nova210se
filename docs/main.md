@@ -356,24 +356,32 @@ API structure: `to_struct` method.
 
 Detailed comments and documentation is written in the source code. Please refer to the source code for more information.
 
-For updated and exact struct backend will return in an API, check each model's `to_{}_struct` method.
-
 ## Acknowledgements
 
 Thanks to the dedicated work and passion of all the three members of Nova 210 SE, the project requirements can be fully implemented on time with no hastiness. The efforts of previous teams years ahead into the development of the SECoder platform is also acknowledged. The team would also like to thank the lecturers and the TAs for their devotion. On the frontend side, the team would like to thank Carl Rippon for his `Learn React with TypeScript: A beginner's guide to reactive web development with React 18 and TypeScript`. It's his highly layered and easy-to-understand book that helped us to develop the core framework of the frontend. On the backend side, Python summer session 2023 helped us to draw a clear picture of the backend structure and the API design quickly.
 
 Used third-party libraries and frameworks:
 
+<div style="display: flex;">
+<div style="margin-right: auto;">
+
 - Django
 - Daphne
 - Django Channels
 - pydenticon
 - Tblib
+
+</div>
+<div style="margin-right: auto;">
+
 - React
 - PrimeReact
 - Tailwind CSS
 - React Query
 - React Router
+
+</div>
+</div>
 
 ---
 
